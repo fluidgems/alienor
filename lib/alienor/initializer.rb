@@ -2,17 +2,17 @@
 
 # rb2g2 - initializer.rb
 module Alienor
-  require 'FileUtils'
+  #~ require 'FileUtils' # redundant ?
 
   class CoreInitializer
     
     class << self
-      def setup (app_name, root = GENERATED_PATH)
+      def setup (app_name, root)
         @app_name = app_name
         @root = root
       end
 
-      def construct(src = File.join(PARADIGM_PATH, "initials"))
+      def construct(src)
         puts "initializing... with #{src}"
         
         # rename index.html if necessary

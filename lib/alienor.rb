@@ -1,3 +1,6 @@
+require 'active_support'
+require 'active_support/core_ext'
+
 require "alienor/version"
 require "alienor/indentation"
 require "alienor/object"

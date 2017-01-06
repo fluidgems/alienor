@@ -11,10 +11,10 @@ module Alienor
 		
 		attr_accessor :root, :paradigm_name
 			
-		def initialize (root = GENERATED_PATH, info = {})
-			super(:source, self)
-			@paradigm_name = PARADIGM_PATH
+		def initialize (root, paradigm_name)
+			super(:source, "", self, self)
 			@root = root
+			@paradigm_name = paradigm_name
 		end
 		
 		def describe
