@@ -80,6 +80,13 @@ class AlienorTest < Minitest::Test
       g = s.group(:g2, "g2")
       g.entity(:e1, "e1").must_be_nil
     end
+    it "uses blocks" do
+      s = Source.new "S1", "Source number 1"
+      g = s.group :g1, "g1", only: :admin do |g|
+        g.entity(:e1, "e1")
+      end
+      g.entities.wont_equal({})
+    end
   end
 
   describe "initializer" do

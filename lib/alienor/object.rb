@@ -38,12 +38,13 @@ module Alienor
         eval(global.name).add_dictionnary x_dic_name.to_sym if global # eg :entities
         
         # define method that creates new objects of a certain entity, eg def group(...)
-        define_method "#{x}" do |name, hname, info={}|
+        define_method "#{x}" do |name, hname, info={}, &block|
           conflict = eval("#{x}_conflict(name)") # this entry already exists
           obj = eval(x_class).new name, hname, self, source, info
           eval("@#{x_dic_name}")[name] = obj # feed parent dictionnary
           eval("@source.#{x_dic_name}")[name] = obj if global # feed source dictionnary if global
-          yield(obj) if block_given?
+          #~ yield(obj) if block_given? # wont work, see next line
+          block.call(obj) if block
           conflict ? nil : obj
         end
         
