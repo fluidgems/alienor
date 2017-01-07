@@ -1,6 +1,8 @@
 # encoding: UTF-8
 
-# rb2g2 - source.rb
+# author : Reynald Bouy
+# copyright 2017 fluidgems
+# ALIENOR - source.rb
 
 module Alienor
 

@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-# rb2g2 / indentation.rb
+# Alienor / indentation.rb
 
 module Alienor
 	module Indentation

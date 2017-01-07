@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 # author : Reynald Bouy
-# copyright 2017 Reynald Bouy
+# copyright 2017 fluidgems
 # ALIENOR - object.rb
 
 module Alienor

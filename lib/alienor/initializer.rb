@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
-# rb2g2 - initializer.rb
+# Alienor - initializer.rb
+
 module Alienor
   #~ require 'FileUtils' # redundant ?
 
