@@ -87,6 +87,17 @@ class AlienorTest < Minitest::Test
       end
       g.entities.wont_equal({})
     end
+    it "knows source, parent and named parent" do
+      s = Source.new "S1", "Source number 1"
+      g = s.group :g1, "g1", only: :admin do |g|
+        e = g.entity(:e1, "e1")
+        e.source.name.must_equal :source
+        e.parent.name.must_equal :g1
+        e.group.name.must_equal :g1
+      end
+      g.source.name.must_equal :source
+      g.parent.name.must_equal :source
+    end
   end
 
   describe "initializer" do

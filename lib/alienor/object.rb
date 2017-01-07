@@ -28,7 +28,13 @@ module Alienor
       # dynamic operations for a "branch" of this object
       # global is the source class if this branch is "global" (meaning Source will hold a dictionnary for this branch)
       def define_branch(x, global = nil)
-        x_class = "#{self.name.split('::')[0..-2].join('::')}::#{x.to_s.camelize}" # compute context + x, eg Something::AlienorTest::Group
+        this_class_name = self.name.split('::')[-1]
+        
+        # compute context + x, eg Something::AlienorTest::Group
+        this_context = self.name.split('::')[0..-2].join('::')
+        x_class = (this_context == "") ? x.to_s.camelize : "#{this_context}::#{x.to_s.camelize}"
+        
+        # dictionnary name
         x_dic_name = x.to_s.pluralize # eg groups, entities
         
         # create dictionnary for that branch
@@ -43,8 +49,7 @@ module Alienor
           obj = eval(x_class).new name, hname, self, source, info
           eval("@#{x_dic_name}")[name] = obj # feed parent dictionnary
           eval("@source.#{x_dic_name}")[name] = obj if global # feed source dictionnary if global
-          #~ yield(obj) if block_given? # wont work, see next line
-          block.call(obj) if block
+          block.call(obj) if block # block for creating other objects. Warning : yield(obj) if block_given? would not work here because within a define_method
           conflict ? nil : obj
         end
         
@@ -53,7 +58,19 @@ module Alienor
         define_method "#{x}_conflict" do |name|
           global ? eval("@source.#{x_dic_name}")[name] : eval("@#{x_dic_name}")[name]
         end
+        
+        # call named_parent definition in child class
+        eval(x_class).define_named_parent this_class_name unless this_class_name == "Source"
 
+      end
+      
+      # define a meaningful alias for method returning parent
+      # eg if Entity is a branch of Group, this will define in class Entity : def group; @parent; end
+      def define_named_parent(parent_class_name)
+        #~ p "parent_class_name : #{parent_class_name}"
+        define_method parent_class_name.underscore do
+          @parent
+        end
       end
     
     end
